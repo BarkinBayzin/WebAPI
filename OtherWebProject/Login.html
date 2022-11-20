@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="lib/jquery/jquery.min.js"></script>
+</head>
+<body>
+    <form id="frm">
+        <input type="text" name="Email" value=""/>
+        <input type="password" name="Password" value=""/>
+        <input type="submit" name="name" value="Oturum Aç"/>
+    </form>
+</body>
+</html>
+
+<script>
+    //kullanıcı giriş yaptıysa içeride kalsın!! home sayfasında logine geçiş yapmasın
+    $(document).ready(function () {
+        if (localStorage.getItem("userInfo") != null) {
+            window.location.href = "https://localhost:44343/home.html";
+        }
+    })
+    var uri = "https://localhost:44313/";
+
+    $("#frm").submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: uri + "api/Account/PostLogin",
+            type: "POST",
+            data: $("#frm").serializeArray(),
+            success: function (response) {
+                if (response == null) {
+                    alert("Parola veya Şifre Hatalı..!");
+                }
+                else {
+                    console.log(JSON.stringify(response));
+                    var userInfoJsonString = JSON.stringify(response);
+                    localStorage.setItem("userInfo", userInfoJsonString);
+                    //sayfalar arası geçiş için
+                    window.location.href = "https://localhost:44343/home.html";
+                }
+            }
+        })
+    })
+</script>

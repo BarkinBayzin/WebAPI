@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="lib/jquery/jquery.min.js"></script>
+</head>
+<body>
+    <form id="frm">
+        <label>Ürün Adı:</label>
+        <input type="text" name="Name" value="" />
+        <br />
+        <label>Stok Miktarı:</label>
+        <input type="number" name="Stock" value="" />
+        <br />
+        <label>Ürün Fiyatı:</label>
+        <input type="number" name="Price" value="" />
+        <br />
+        <input type="submit" name="name" value="Kaydet" />
+    </form>
+</body>
+</html>
+<script>
+    var uri = "https://localhost:44313/";
+
+    //$("#frm").serializeArray();
+    //formdaki bilgileri alıp obje formatına çevirir
+    //form'daki name proplarına bakarak
+
+    $("#frm").submit(function (e) {
+        //form postback olmasın
+        e.preventDefault();
+
+        $.ajax({
+            url: uri + "api/Product/PostProduct",
+            type: "Post",
+            data: $("#frm").serializeArray(),
+            crossDomain:true,
+            //dataType:"xml",
+            success: function (response) {
+                console.log(response);
+                alert(response);
+            }
+        })
+
+    })
+</script>

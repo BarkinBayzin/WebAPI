@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="lib/jquery/jquery.min.js"></script>
+</head>
+<body>
+    <a href="https://localhost:44313/api/Product/GetProductByID/1">Get Product</a>
+
+    <button id="btn">Get Products</button>
+    <a href="https://localhost:44343/insertproduct.html">Go to post..</a>
+
+    <p id="data"></p>
+</body>
+</html>
+<script>
+    var uri = "https://localhost:44313/";
+
+    //ajax isteklerinde dataType kısmını belirtmez isek default olarak json döner.
+    //dataType xml için apini xml formatters'ın temizlenmiş olması lazım.
+
+    $("#btn").click(function () {
+        $.ajax({
+            url: uri + "api/Product/GetProducts",
+            type: "Get",
+            //dataType:"xml",
+            success: function (response) {
+                $.each(response, function (index, value) {
+                    $("#data").append(value.Name);
+                })
+            }
+        })
+    })   
+</script>

@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="lib/jquery/jquery.min.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    $(function () {
+        var userInfoObj = JSON.parse(localStorage.getItem("userInfo"));
+        console.log(userInfoObj);
+        if (userInfoObj != null) {
+            $.ajax({
+                url: "https://localhost:44313/api/Kategorilerim?email=" + userInfoObj.Email + "&userID=" + userInfoObj.UserID,
+                type: "GET",
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (error) {
+                    alert(error);
+                }
+            })
+        }
+    })
+</script>

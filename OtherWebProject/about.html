@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="lib/jquery/jquery.min.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    var uri = "https://localhost:44313/";
+    var data = JSON.parse(localStorage.getItem("userInfo"));
+
+    if (data == null) {
+        data = new Object();
+        data.Email = "";
+        data.UserID = 0;
+    }
+
+    $(function () {
+        $.ajax({
+            url: uri + "api/User/GetUserInformation?email=" + data.Email + "&userID=" + data.UserID,
+            type: "Get",
+            success: function (response) {
+                //kullanıcı bilgilerini ekrana/console'a yazdırma
+                console.log(response);
+            },
+            error: function (error) {
+                if (error.status == "401") {
+                    window.location.href = "https://localhost:44343/unauthorize.html";
+                }
+                console.log(error);
+            }
+        })
+    })
+</script>
+  

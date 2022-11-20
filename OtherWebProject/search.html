@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="lib/jquery/jquery.min.js"></script>
+</head>
+<body>
+    <input onchange="Search(this.value)" type="search" name="Name" value="" />
+
+   <div id="test">
+
+   </div>
+</body>
+</html>
+<script>
+    $(function () {
+        $.ajax({
+            url: "https://localhost:44313/api/Test/GetTest",
+            type: "GET",
+            success: function (response) {
+                var div = $("#test");
+                $.each(response, function (index, value) {
+                    $(div).append("<p>" + value.Name + "</p>");
+                })
+            }
+        })
+    })
+
+    function Search(inputValue) {
+        $.ajax({
+            url: "https://localhost:44313/api/Test/GetTest?$filter=Name" + " eq %27" + inputValue + "%27",
+            type: "GET",
+            success: function (response) {
+                var div = $("#test");
+                $(div).empty();
+                $.each(response, function (index, value) {
+                    $(div).append("<p>" + value.Name + "</p>");
+                })
+            }
+        })
+    }
+
+
+    
+</script>
